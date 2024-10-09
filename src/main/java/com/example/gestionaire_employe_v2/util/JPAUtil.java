@@ -10,7 +10,7 @@ public class JPAUtil {
     static {
         try {
             System.out.println("Initializing JPA EntityManagerFactory...");
-            entityManagerFactory = Persistence.createEntityManagerFactory("employe_management");
+            entityManagerFactory = Persistence.createEntityManagerFactory("employe_management_v2");
             System.out.println("EntityManagerFactory created successfully.");
         } catch (Throwable ex) {
             ex.printStackTrace();
@@ -18,9 +18,12 @@ public class JPAUtil {
         }
     }
 
+
     public static EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
     }
+
+
 
     public static void shutdown() {
         if (entityManagerFactory != null) {

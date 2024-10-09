@@ -55,6 +55,8 @@ public class Employe extends User {
         return dateOfBirth;
     }
 
+
+
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
@@ -113,5 +115,20 @@ public class Employe extends User {
 
     public void setPost(String post) {
         this.post = post;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Employe{" +
+                "dateOfBirth=" + dateOfBirth +
+                ", socialNbr='" + socialNbr + '\'' +
+                ", dateOfJoining=" + dateOfJoining +
+                ", salary=" + salary +
+                ", childNbr=" + childNbr +
+                ", leaveBalance=" + leaveBalance +
+                ", department='" + department + '\'' +
+                ", post='" + post + '\'' +
+                '}';
     }
 }

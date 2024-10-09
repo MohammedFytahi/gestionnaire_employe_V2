@@ -9,5 +9,6 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a class="btn add" href="view/ajouterEmploye.jsp">Add New Employee</a>
 </body>
 </html>
