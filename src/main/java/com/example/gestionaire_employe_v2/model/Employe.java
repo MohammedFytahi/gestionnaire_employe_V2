@@ -32,14 +32,14 @@ public class Employe extends User {
     @Column(name = "post", nullable = false)
     private String post;
 
-    // Constructeur par défaut
+
     public Employe() {
-        super(); // Appel au constructeur parent
+        super();
     }
 
-    // Constructeur avec paramètres
-    public Employe(int id,String username, String email, String password, Role role, LocalDate dateOfBirth, String socialNbr, LocalDate dateOfJoining, Long salary, int childNbr, Long leaveBalance, String department, String post) {
-        super(id,username, email, password, role); // Appel au constructeur parent
+
+    public Employe(int id, String username, String email, String password, LocalDate dateOfBirth, String socialNbr, LocalDate dateOfJoining, Long salary, int childNbr, Long leaveBalance, String department, String post) {
+        super(id, username, email, password, Role.EMPLOYE);
         this.dateOfBirth = dateOfBirth;
         this.socialNbr = socialNbr;
         this.dateOfJoining = dateOfJoining;
@@ -49,6 +49,7 @@ public class Employe extends User {
         this.department = department;
         this.post = post;
     }
+
 
     // Getters et Setters
     public LocalDate getDateOfBirth() {

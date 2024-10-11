@@ -12,27 +12,32 @@ public class Application {
     private int id;
 
     @Column(name = "condidateName")
-    private String condidateName;
+    private String candidateName;
 
     @Column(name = "email")
     private String email;
 
-    // Use @ElementCollection to store multiple skills
+
     @ElementCollection
     @CollectionTable(name = "application_skills", joinColumns = @JoinColumn(name = "application_id"))
     @Column(name = "skill")
     private List<String> skills;
 
 
-    public Application(){
+    @ManyToOne
+    @JoinColumn(name = "offre_id")
+    private Offre offre;
 
-    }
+    public Application() {}
 
-    public Application(String condidateName, String email, List<String> skills) {
-        this.condidateName = condidateName;
+    public Application(String candidateName, String email, List<String> skills, Offre offre) {
+        this.candidateName = candidateName;
         this.email = email;
         this.skills = skills;
+        this.offre = offre;
     }
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -42,12 +47,12 @@ public class Application {
         this.id = id;
     }
 
-    public String getCondidateName() {
-        return condidateName;
+    public String getCandidateName() {
+        return candidateName;
     }
 
-    public void setCondidateName(String condidateName) {
-        this.condidateName = condidateName;
+    public void setCandidateName(String candidateName) {
+        this.candidateName = candidateName;
     }
 
     public String getEmail() {
@@ -64,5 +69,13 @@ public class Application {
 
     public void setSkills(List<String> skills) {
         this.skills = skills;
+    }
+
+    public Offre getOffre() {
+        return offre;
+    }
+
+    public void setOffre(Offre offre) {
+        this.offre = offre;
     }
 }

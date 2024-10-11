@@ -13,4 +13,6 @@ public interface EmployeServiceInterface {
     Employe trouverParId(long id);
 
     List<Employe> findAllEmployes();
+
+    void deleteEmploye(int id);
 }

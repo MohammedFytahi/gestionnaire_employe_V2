@@ -24,12 +24,12 @@ public class DatabaseConnectionTest {
             entityManager.getTransaction().commit();
 
         } catch (Exception e) {
-            // Si une exception est levée, cela signifie qu'il y a un problème de connexion ou de configuration
+
             System.err.println("La connexion a échoué : " + e.getMessage());
             e.printStackTrace();
 
         } finally {
-            // Fermer l'EntityManager et l'EntityManagerFactory pour libérer les ressources
+
             if (entityManager != null) {
                 entityManager.close();
             }

@@ -10,6 +10,9 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a class="btn add" href="view/ajouterEmploye.jsp">Add New Employee</a>
+<a class="btn add" href="view/addOffre.jsp"> offre</a>
+<a class="btn add" href="ListOffreServlet"> offre</a>
 <a class="btn add" href="listEmploye">view Employee</a>
+<a class="btn add" href="view/ajouterRh.jsp">add rh</a>
 </body>
 </html>

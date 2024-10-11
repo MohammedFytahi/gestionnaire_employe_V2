@@ -3,6 +3,7 @@ package com.example.gestionaire_employe_v2.controller;
 import com.example.gestionaire_employe_v2.enums.Role;
 import com.example.gestionaire_employe_v2.model.Employe;
 import com.example.gestionaire_employe_v2.service.impl.EmployeService;
+import com.example.gestionaire_employe_v2.service.interf.EmployeServiceInterface;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
     @WebServlet(name = "editEmploye", value = "/editEmploye")
 public class EditEmployeServlet extends HttpServlet {
 
-    private final EmployeService employeService = new EmployeService();
+    private final EmployeServiceInterface employeService = new EmployeService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,7 +72,7 @@ public class EditEmployeServlet extends HttpServlet {
             employeService.updateEmploye(employe);
 
 
-            response.sendRedirect("listEmploye.jsp");
+            response.sendRedirect(request.getContextPath() + "/listEmploye");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp");

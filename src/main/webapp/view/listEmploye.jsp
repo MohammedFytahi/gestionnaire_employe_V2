@@ -42,7 +42,7 @@
       <td>${employe.post}</td>
       <td>
         <a href="editEmploye?id=${employe.id}">Edit</a>
-        <a href="deleteEmploye?id=${employe.id}">Delete</a>
+        <a href="deleteEmploye?id=${employe.id}" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
       </td>
     </tr>
   </c:forEach>

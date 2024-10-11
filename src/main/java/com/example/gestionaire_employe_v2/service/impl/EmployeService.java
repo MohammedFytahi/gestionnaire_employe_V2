@@ -21,7 +21,7 @@ public class EmployeService implements EmployeServiceInterface {
     }
 
     public Employe trouverParId(long id){
-       return employeRepository.findEmployeById(id);
+        return employeRepository.findEmployeById(id);
     }
     @Override
     public void updateEmploye(Employe employe){
@@ -31,5 +31,10 @@ public class EmployeService implements EmployeServiceInterface {
     @Override
     public List<Employe> findAllEmployes(){
         return  employeRepository.findall();
+    }
+
+    @Override
+    public void deleteEmploye(int id){
+        employeRepository.deleteEmploye(id);
     }
 }

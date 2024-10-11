@@ -33,9 +33,9 @@ public class EmployeRepository implements EmployeRepositoryInterface {
 
 
 
-        @Override
-        public List<Employe> findall(){
-            List<Employe> employes = new ArrayList<>();
+    @Override
+    public List<Employe> findall(){
+        List<Employe> employes = new ArrayList<>();
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -55,7 +55,7 @@ public class EmployeRepository implements EmployeRepositoryInterface {
             entityManager.close();
         }
         return employes;
-        }
+    }
 
 
         @Override
@@ -77,6 +77,28 @@ public class EmployeRepository implements EmployeRepositoryInterface {
         try {
             transaction.begin();
             entityManager.merge(employe);
+            transaction.commit();
+        }catch (Exception e){
+            if (transaction.isActive()){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+        }
+
+        @Override
+        public void deleteEmploye(int id){
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            Employe employe = entityManager.find(Employe.class,id);
+            if (employe != null){
+                entityManager.remove(employe);
+            }
             transaction.commit();
         }catch (Exception e){
             if (transaction.isActive()){

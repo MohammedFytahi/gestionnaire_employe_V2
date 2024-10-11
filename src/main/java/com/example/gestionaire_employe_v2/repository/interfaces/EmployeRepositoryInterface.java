@@ -10,4 +10,6 @@ public interface EmployeRepositoryInterface {
 
     Employe findEmployeById(long id);
     List<Employe> findall();
+
+    void deleteEmploye(int id);
 }
