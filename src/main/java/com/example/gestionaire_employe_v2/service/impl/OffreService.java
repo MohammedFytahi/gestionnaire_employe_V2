@@ -22,4 +22,9 @@ public class OffreService implements OffreServiceInterface {
       return  offreRepository.findAll();
     }
 
+    @Override
+    public Offre findById(long id){
+        return offreRepository.findById(id);
+    }
+
 }

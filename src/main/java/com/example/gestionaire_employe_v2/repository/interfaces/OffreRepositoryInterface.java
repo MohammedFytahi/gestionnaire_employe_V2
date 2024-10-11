@@ -8,4 +8,6 @@ public interface OffreRepositoryInterface {
 
     void addOffre(Offre offre);
     List<Offre> findAll();
+
+    Offre findById(long id);
 }

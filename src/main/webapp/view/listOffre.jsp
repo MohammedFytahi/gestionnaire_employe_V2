@@ -73,7 +73,9 @@
       <p class="card-text"><strong>Exigences:</strong> ${offre.requirements}</p>
       <p class="card-text"><strong>Période de validité:</strong> ${offre.validityPeriode}</p>
       <p class="card-text"><strong>Statut:</strong> ${offre.statut}</p>
-      <a href="#" class="btn">Postuler</a>
+
+
+      <a href="<c:url value='/ApplicationServlet?offreId=${offre.id}' />" class="btn">Postuler</a>
     </div>
   </c:forEach>
 </div>

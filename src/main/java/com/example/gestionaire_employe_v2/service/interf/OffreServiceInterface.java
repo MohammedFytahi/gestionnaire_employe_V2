@@ -8,4 +8,5 @@ public interface OffreServiceInterface {
     void addOffre(Offre offre);
 
     List<Offre> findAll();
+    Offre findById(long id);
 }

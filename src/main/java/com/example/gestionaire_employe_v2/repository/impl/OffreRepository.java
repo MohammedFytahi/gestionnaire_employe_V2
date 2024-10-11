@@ -60,4 +60,14 @@ public class OffreRepository implements OffreRepositoryInterface {
         }
         return offres;
     }
+
+    @Override
+    public Offre findById(long id){
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        try {
+            return entityManager.find(Offre.class, id);
+        }finally {
+            entityManager.close();
+        }
+    }
 }
