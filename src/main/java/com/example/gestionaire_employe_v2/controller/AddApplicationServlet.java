@@ -10,41 +10,38 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
-@WebServlet(name = "ApplicationServlet", value = "/ApplicationServlet")
-public class ApplicationServlet extends HttpServlet {
+@WebServlet(name = "AddApplicationServlet", value = "/AddApplicationServlet")
+public class AddApplicationServlet extends HttpServlet {
 
     private final OffreService offreService;
-    private final ApplicationService applicationService;
+    private  ApplicationService applicationService;
 
-    public ApplicationServlet() {
+    public AddApplicationServlet() {
         this.offreService = new OffreService();
-        this.applicationService = new ApplicationService();
+        this.applicationService =new ApplicationService();
     }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String skillsString = request.getParameter("skills");
 
-        if (skillsString != null && !skillsString.isEmpty()) {
-            List<String> skills = Arrays.asList(skillsString.split(","));
-            for (int i = 0; i < skills.size(); i++) {
-                skills.set(i, skills.get(i).trim());
-            }
+        String offreIdParam = request.getParameter("offreId");
 
-            System.out.println("Filtrage par compétences : " + skills);
-            List<Application> applications = applicationService.filterApplicationsBySkills(skills);
-            request.setAttribute("applications", applications);
+        if (offreIdParam != null) {
+            int offreId = Integer.parseInt(offreIdParam);
+
+
+            Offre offre = offreService.findById(offreId);
+
+
+            request.setAttribute("offre", offre);
+
+
+            request.getRequestDispatcher("view/apply.jsp").forward(request, response);
         } else {
-            System.out.println("Affichage de toutes les applications");
-            List<Application> allApplications = applicationService.getAllApplications();
-            request.setAttribute("applications", allApplications);
+
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "L'offre n'existe pas.");
         }
-
-        request.getRequestDispatcher("view/applications_list.jsp").forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String candidateName = request.getParameter("candidateName");
@@ -73,10 +70,11 @@ public class ApplicationServlet extends HttpServlet {
 
         try {
             applicationService.saveApplication(application);
-            response.sendRedirect(request.getContextPath() + "/success.jsp");
+            response.sendRedirect(request.getContextPath() + "/ApplicationServlet");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
     }
+
 }

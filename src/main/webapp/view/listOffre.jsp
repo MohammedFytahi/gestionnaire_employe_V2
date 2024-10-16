@@ -61,10 +61,24 @@
     .btn:hover {
       background-color: #0056b3; /* Darker blue on hover */
     }
+
+    .add-offer {
+      text-align: center; /* Center align the button */
+      margin-bottom: 20px; /* Space below the button */
+    }
   </style>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <h1>List of Job Offers</h1>
+
+
+<c:if test="${not empty sessionScope.user && sessionScope.user.role == 'RH'}">
+  <div class="add-offer">
+    <a href="addOffre" class="btn">Ajouter une offre</a>
+  </div>
+</c:if>
+
 <div class="container">
   <c:forEach var="offre" items="${offres}">
     <div class="card">
@@ -74,8 +88,14 @@
       <p class="card-text"><strong>Période de validité:</strong> ${offre.validityPeriode}</p>
       <p class="card-text"><strong>Statut:</strong> ${offre.statut}</p>
 
+      <c:choose>
+        <c:when test="${empty sessionScope.user}">
+          <a href="<c:url value='/AddApplicationServlet?offreId=${offre.id}' />" class="btn">Postuler</a>
+        </c:when>
+        <c:otherwise>
 
-      <a href="<c:url value='/ApplicationServlet?offreId=${offre.id}' />" class="btn">Postuler</a>
+        </c:otherwise>
+      </c:choose>
     </div>
   </c:forEach>
 </div>

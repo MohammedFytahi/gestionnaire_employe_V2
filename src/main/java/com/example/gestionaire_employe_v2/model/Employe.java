@@ -4,10 +4,12 @@ import com.example.gestionaire_employe_v2.enums.Role;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
 public class Employe extends User {
+
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
@@ -32,13 +34,16 @@ public class Employe extends User {
     @Column(name = "post", nullable = false)
     private String post;
 
+    // Relation OneToMany avec FamilyAllowance
+    @OneToMany(mappedBy = "employe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FamilyAllowance> familyAllowances;
 
     public Employe() {
         super();
     }
 
-
-    public Employe(int id, String username, String email, String password, LocalDate dateOfBirth, String socialNbr, LocalDate dateOfJoining, Long salary, int childNbr, Long leaveBalance, String department, String post) {
+    public Employe(int id, String username, String email, String password, LocalDate dateOfBirth, String socialNbr,
+                   LocalDate dateOfJoining, Long salary, int childNbr, Long leaveBalance, String department, String post) {
         super(id, username, email, password, Role.EMPLOYE);
         this.dateOfBirth = dateOfBirth;
         this.socialNbr = socialNbr;
@@ -50,13 +55,10 @@ public class Employe extends User {
         this.post = post;
     }
 
-
     // Getters et Setters
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
-
-
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
@@ -118,6 +120,13 @@ public class Employe extends User {
         this.post = post;
     }
 
+    public List<FamilyAllowance> getFamilyAllowances() {
+        return familyAllowances;
+    }
+
+    public void setFamilyAllowances(List<FamilyAllowance> familyAllowances) {
+        this.familyAllowances = familyAllowances;
+    }
 
     @Override
     public String toString() {

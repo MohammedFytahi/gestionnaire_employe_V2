@@ -44,6 +44,16 @@
             box-sizing: border-box; /* Include padding in width */
         }
 
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+            margin-bottom: 10px;
+        }
+
         button {
             background-color: #007BFF;
             color: white;
@@ -62,28 +72,38 @@
     </style>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <h1>Add a New Job Offer</h1>
 
 <div class="form-container">
+
+    <!-- Display success or error messages -->
+    <c:if test="${not empty errorMessage}">
+        <p class="error">${errorMessage}</p>
+    </c:if>
+    <c:if test="${not empty successMessage}">
+        <p class="success">${successMessage}</p>
+    </c:if>
+
     <form action="<c:url value='/addOffre' />" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+        <label for="title">Title: <span style="color:red">*</span></label>
+        <input type="text" id="title" name="title" required aria-label="Job offer title">
 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
+        <label for="description">Description: <span style="color:red">*</span></label>
+        <textarea id="description" name="description" required aria-label="Job offer description"></textarea>
 
-        <label for="requirements">Requirements:</label>
-        <textarea id="requirements" name="requirements" required></textarea>
+        <label for="requirements">Requirements: <span style="color:red">*</span></label>
+        <textarea id="requirements" name="requirements" required aria-label="Job offer requirements"></textarea>
 
-        <label for="validityPeriode">Validity Period:</label>
-        <input type="date" id="validityPeriode" name="validityPeriode" required>
+        <label for="validityPeriode">Validity Period: <span style="color:red">*</span></label>
+        <input type="date" id="validityPeriode" name="validityPeriode" required aria-label="Job offer validity period">
 
-        <label for="statut">Status:</label>
-        <select id="statut" name="statut" required>
-            <option value="RECU">RECU</option>
-            <option value="EN_COURS">EN_COURS</option>
-            <option value="REJETE">REJETE</option>
-            <option value="ACCEPTE">ACCEPTE</option>
+        <label for="statut">Status: <span style="color:red">*</span></label>
+        <select id="statut" name="statut" required aria-label="Job offer status">
+            <option value="RECU">Recu</option>
+            <option value="EN_COURS">En cours</option>
+            <option value="REJETE">Rejeté</option>
+            <option value="ACCEPTE">Accepté</option>
         </select>
 
         <button type="submit">Submit</button>

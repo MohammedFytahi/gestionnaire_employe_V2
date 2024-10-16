@@ -54,7 +54,7 @@ public class EditEmployeServlet extends HttpServlet {
             String post = request.getParameter("post");
 
 
-            Employe employe = employeService.trouverParId(id); // Use the service method to find employee
+            Employe employe = employeService.trouverParId(id);
             employe.setUsername(username);
             employe.setEmail(email);
             employe.setPassword(password);

@@ -13,18 +13,18 @@ public class DeleteEmployeServlet extends HttpServlet {
     private final EmployeServiceInterface employeService;
 
     public DeleteEmployeServlet() {
-        this.employeService = new EmployeService(); // Instantiate the service
+        this.employeService = new EmployeService();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve the employee ID from the request parameter
+
         int id = Integer.parseInt(request.getParameter("id"));
 
-        // Call the service to delete the employee by ID
+
         employeService.deleteEmploye(id);
 
-        // Redirect back to the employee list after deletion
+
         response.sendRedirect("listEmploye");
     }
 }

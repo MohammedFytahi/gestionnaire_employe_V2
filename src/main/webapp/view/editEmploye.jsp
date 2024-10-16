@@ -13,6 +13,7 @@
     <title>Edit Employee</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <h1>Edit Employee</h1>
 <form action="<c:url value='/editEmploye' />" method="post">
     <input type="hidden" name="id" value="${employe.id}">

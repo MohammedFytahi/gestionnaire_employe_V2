@@ -15,7 +15,7 @@ public class ListEmployeServlet extends HttpServlet {
 
     private final EmployeServiceInterface employeService;
 
-    // Constructeur
+
     public ListEmployeServlet() {
         this.employeService = new EmployeService();
     }

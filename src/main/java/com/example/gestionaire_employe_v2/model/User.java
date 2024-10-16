@@ -4,11 +4,11 @@
     import jakarta.persistence.*;
 
     @Entity
-    @Inheritance(strategy = InheritanceType.JOINED)
+    @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
     @Table(name = "users")
     public class User {
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private int id;
 
         @Column(name = "username", nullable = false)

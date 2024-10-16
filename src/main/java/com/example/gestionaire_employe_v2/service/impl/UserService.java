@@ -9,13 +9,15 @@ public class UserService implements UserServiceInterface {
     private final UserRepository userRepository;
 
     public UserService() {
-        this.userRepository = new UserRepository(); // Initialiser le UserRepository
+        this.userRepository = new UserRepository();
     }
 
     @Override
     public User authenticate(String email, String password) {
-        // Appel à la méthode d'authentification du UserRepository
-        User user = userRepository.authenticate(email, password);
-        return user; // Retourner l'utilisateur ou null si non trouvé
+        User user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
 }

@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Apply for Job Offer</title>
+  <title>Demande de congé</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,14 +11,14 @@
       padding: 20px;
     }
 
-    h1 {
+    h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #333;
     }
 
     .form-container {
-      max-width: 400px; /* Limit the form width */
+      max-width: 500px; /* Limit the form width */
       margin: 0 auto; /* Center the form on the page */
       background-color: white;
       padding: 20px;
@@ -33,9 +32,9 @@
       color: #555; /* Label text color */
     }
 
-    input[type="text"],
-    input[type="email"],
-    textarea {
+    input[type="date"],
+    textarea,
+    input[type="file"] {
       width: 100%; /* Inputs take full width */
       padding: 10px; /* Internal spacing */
       margin-bottom: 15px; /* Spacing between fields */
@@ -45,14 +44,14 @@
       transition: border-color 0.3s; /* Animation for border color */
     }
 
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    textarea:focus {
+    input[type="date"]:focus,
+    textarea:focus,
+    input[type="file"]:focus {
       border-color: #007BFF; /* Blue border on focus */
       outline: none; /* Remove default outline */
     }
 
-    button {
+    input[type="submit"] {
       background-color: #007BFF; /* Button color */
       color: white; /* Button text color */
       padding: 10px 15px; /* Internal spacing */
@@ -64,7 +63,7 @@
       width: 100%; /* Full width */
     }
 
-    button:hover {
+    input[type="submit"]:hover {
       background-color: #0056b3; /* Darker color on hover */
     }
 
@@ -74,31 +73,33 @@
         padding: 15px;
       }
 
-      input[type="text"],
-      input[type="email"],
+      input[type="date"],
       textarea,
-      button {
+      input[type="file"],
+      input[type="submit"] {
         font-size: 14px; /* Adjust font size for smaller screens */
       }
     }
   </style>
 </head>
 <body>
-<h1>Apply for: ${offre.title}</h1>
+<%@ include file="header.jsp" %>
 <div class="form-container">
-  <form action="<c:url value='/ApplicationServlet' />" method="post">
-    <label for="candidateName">Candidate Name:</label>
-    <input type="text" id="candidateName" name="candidateName" required>
+  <h2>Soumettre une demande de congé</h2>
+  <form action="${pageContext.request.contextPath}/submitLeaveRequest" method="post" enctype="multipart/form-data">
+    <label for="startDate">Date de début :</label>
+    <input id="startDate" type="date" name="startDate" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <label for="endDate">Date de fin :</label>
+    <input id="endDate" type="date" name="endDate" required>
 
-    <label for="skills">Skills (comma-separated):</label>
-    <textarea id="skills" name="skills" required></textarea>
+    <label for="leaveReason">Motif :</label>
+    <textarea id="leaveReason" name="leaveReason" required></textarea>
 
-    <input type="hidden" name="offreId" value="${offre.id}">
+    <label for="supportingDocs">Documents justificatifs :</label>
+    <input id="supportingDocs" type="file" name="supportingDocs">
 
-    <button type="submit">Submit Application</button>
+    <input type="submit" value="Soumettre la demande">
   </form>
 </div>
 </body>

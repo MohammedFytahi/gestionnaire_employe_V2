@@ -19,7 +19,7 @@ public class RhRepository implements RhRepositoryInterface {
 
         try {
             transaction.begin();
-            entityManager.persist(rh);  // Persiste l'objet Rh qui hérite de User
+            entityManager.persist(rh);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {

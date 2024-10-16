@@ -59,6 +59,7 @@
     </style>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <h1>Add New Employee</h1>
 <div class="form-container">
     <form action="<c:url value='/addEmploye' />" method="post">
