@@ -65,4 +65,8 @@ public class EmployeService implements EmployeServiceInterface {
         }
         return 0.0;
     }
+
+    public List<FamilyAllowance> getAllFamilyAllowances() {
+        return familyAllowanceRepository.findAllFamilyAllowances();
+    }
 }

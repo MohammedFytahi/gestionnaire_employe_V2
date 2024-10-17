@@ -14,12 +14,13 @@
                             <li><a href="adminLeaveRequests">Voir Demandes de Congé</a></li>
                             <li><a href="ListOffreServlet">Offres</a></li>
                             <li><a href="listEmploye">Employés</a></li>
-                            <li><a href="view/showAllowance.jsp">Allocations</a></li>
+                            <li><a href="calculateAllowance">Allocations</a></li>
                         </c:if>
                         <c:if test="${sessionScope.user.role == 'RH'}">
                             <li><a href="ListOffreServlet">Offres</a></li>
                             <li><a href="addOffre">Ajouter Offre</a></li>
                             <li><a href="ApplicationServlet">Application</a></li>
+                            <li><a href="calculateAllowance">Allowance</a></li>
                         </c:if>
                         <c:if test="${sessionScope.user.role == 'EMPLOYE'}">
                             <li><a href="view/leaveRequestForm.jsp">Demande de congé</a></li>

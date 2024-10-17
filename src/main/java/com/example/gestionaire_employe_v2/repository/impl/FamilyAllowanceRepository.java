@@ -49,7 +49,13 @@ public class FamilyAllowanceRepository implements FamilyAllowanceRepositoryInter
 
         try {
             transaction.begin();
-            TypedQuery<FamilyAllowance> query = entityManager.createQuery("SELECT f FROM FamilyAllowance f", FamilyAllowance.class);
+
+
+            TypedQuery<FamilyAllowance> query = entityManager.createQuery(
+                    "SELECT f FROM FamilyAllowance f JOIN FETCH f.employe",
+                    FamilyAllowance.class
+            );
+
             allowances = query.getResultList();
             transaction.commit();
         } catch (Exception e) {

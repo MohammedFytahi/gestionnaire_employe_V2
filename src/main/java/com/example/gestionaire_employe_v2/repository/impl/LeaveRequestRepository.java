@@ -3,12 +3,13 @@ package com.example.gestionaire_employe_v2.repository.impl;
 import com.example.gestionaire_employe_v2.enums.Statut;
 import com.example.gestionaire_employe_v2.model.LeaveRequest;
 import com.example.gestionaire_employe_v2.util.JPAUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+@ApplicationScoped
 public class LeaveRequestRepository {
-
 
     public void save(LeaveRequest leaveRequest) {
         EntityManager entityManager = JPAUtil.getEntityManager();
