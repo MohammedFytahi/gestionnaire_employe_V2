@@ -25,9 +25,9 @@ public class EmployeServiceTest {
     @InjectMocks
     private EmployeService employeService;
 
-    @BeforeEach // Change to BeforeEach for JUnit 5
+    @BeforeEach
     public void setUp() {
-        // No need to initialize mocks, MockitoExtension handles that
+
     }
 
     @Test
