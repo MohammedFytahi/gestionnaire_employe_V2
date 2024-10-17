@@ -19,7 +19,7 @@ import java.io.IOException;
 public class UpdateLeaveRequestStatusServlet extends HttpServlet {
 
     private final LeaveRequestService leaveRequestService = new LeaveRequestService();
-    private final EmployeService employeeService = new EmployeService(); // Service pour récupérer l'employé
+    private final EmployeService employeeService = new EmployeService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
