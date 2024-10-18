@@ -1,7 +1,9 @@
 package com.example.gestionaire_employe_v2.service.impl;
 
 import com.example.gestionaire_employe_v2.model.Employe;
+import com.example.gestionaire_employe_v2.model.FamilyAllowance;
 import com.example.gestionaire_employe_v2.repository.impl.EmployeRepository;
+import com.example.gestionaire_employe_v2.repository.impl.FamilyAllowanceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,12 +25,17 @@ public class EmployeServiceTest {
     @Mock
     private EmployeRepository employeRepository;
 
+    @Mock
+    private FamilyAllowanceRepository familyAllowanceRepository;
     @InjectMocks
     private EmployeService employeService;
-
+    private Employe employe;
     @BeforeEach
     public void setUp() {
-
+        employe = new Employe();
+        employe.setId(1);
+        employe.setChildNbr(2); // 2 enfants
+        employe.setSalary(new Long("550"));
     }
 
     @Test
@@ -71,5 +79,35 @@ public class EmployeServiceTest {
         Employe result = employeService.trouverParId(2);
         assertNull(result);
         verify(employeRepository, times(1)).findEmployeById(2);
+    }
+
+
+    @Test
+    public void testCalculateFamilyAllowance_Success() {
+
+        when(employeRepository.findEmployeById(1)).thenReturn(employe);
+
+
+        Double calculatedAllowance = employeService.calculateFamilyAllowance(1);
+
+
+        assertEquals(600.0, calculatedAllowance);
+
+
+        verify(familyAllowanceRepository, times(1)).addFamilyAllowance(any(FamilyAllowance.class));
+    }
+
+    @Test
+    public void testCalculateFamilyAllowance_EmployeeNotFound() {
+
+        when(employeRepository.findEmployeById(2)).thenReturn(null);
+
+
+        Double calculatedAllowance = employeService.calculateFamilyAllowance(2);
+
+
+        assertEquals(0.0, calculatedAllowance);
+
+        verify(familyAllowanceRepository, times(0)).addFamilyAllowance(any(FamilyAllowance.class));
     }
 }

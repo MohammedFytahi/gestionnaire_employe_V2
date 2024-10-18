@@ -37,7 +37,7 @@ public class Application {
         this.offre = offre;
     }
 
-    // Getters and Setters
+
 
     public int getId() {
         return id;

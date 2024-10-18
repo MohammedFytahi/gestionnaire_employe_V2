@@ -3,12 +3,14 @@ package com.example.gestionaire_employe_v2.repository.impl;
 import com.example.gestionaire_employe_v2.model.Application;
 import com.example.gestionaire_employe_v2.repository.interfaces.ApplicationRepositoryInterface;
 import com.example.gestionaire_employe_v2.util.JPAUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
+@ApplicationScoped
 public class ApplicationRepository implements ApplicationRepositoryInterface {
 
     @Override
