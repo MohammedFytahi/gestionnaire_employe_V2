@@ -109,5 +109,16 @@ public class EmployeRepository implements EmployeRepositoryInterface {
             entityManager.close();
         }
         }
+
+    public long getLeaveBalance(long employeeId) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        try {
+            Employe employe = entityManager.find(Employe.class, employeeId);
+            return employe != null ? employe.getLeaveBalance() : 0;
+        } finally {
+            entityManager.close();
+        }
     }
+
+}
 

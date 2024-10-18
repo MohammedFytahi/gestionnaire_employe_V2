@@ -3,22 +3,22 @@ package com.example.gestionaire_employe_v2.service.impl;
 import com.example.gestionaire_employe_v2.model.Application;
 import com.example.gestionaire_employe_v2.model.Offre;
 import com.example.gestionaire_employe_v2.repository.impl.ApplicationRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ApplicationServiceTest {
 
     @Mock
@@ -26,13 +26,15 @@ public class ApplicationServiceTest {
 
     @InjectMocks
     private ApplicationService applicationService;
+
     private List<Application> applications;
-    @BeforeEach
+
+    @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this); // Initialize mocks
         Offre offre1 = new Offre();
         Offre offre2 = new Offre();
 
-        // Create some mock applications
         Application app1 = new Application("John Doe", "john.doe@example.com", Arrays.asList("Java", "Spring"), offre1);
         Application app2 = new Application("Jane Smith", "jane.smith@example.com", Arrays.asList("SQL", "Java"), offre2);
         Application app3 = new Application("Emily Davis", "emily.davis@example.com", Arrays.asList("Python", "Django"), offre2);
@@ -42,33 +44,21 @@ public class ApplicationServiceTest {
 
     @Test
     public void testSaveApplication() {
-
         Application application = new Application();
-        application.setId(1);  // Set some values to the application object
+        application.setId(1);
         application.setCandidateName("John Doe");
         application.setEmail("Software@gmail.com");
 
-
-
         applicationService.saveApplication(application);
-
-
         verify(applicationRepository).saveApplication(application);
     }
 
-
     @Test
     public void testFilterApplicationsBySkills() {
-
         List<String> requiredSkills = Arrays.asList("Java");
-
-
         when(applicationRepository.findApplicationsBySkills(requiredSkills)).thenReturn(applications);
 
-
         List<Application> filteredApplications = applicationService.filterApplicationsBySkills(requiredSkills);
-
-
         verify(applicationRepository).findApplicationsBySkills(requiredSkills);
 
         assertEquals(3, filteredApplications.size());
