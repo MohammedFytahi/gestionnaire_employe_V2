@@ -6,9 +6,12 @@ import com.example.gestionaire_employe_v2.repository.impl.LeaveRequestRepository
 
 import java.util.List;
 
+import jakarta.inject.Inject;
+
 
 public class LeaveRequestService {
-    private final LeaveRequestRepository leaveRequestRepository = new LeaveRequestRepository();
+    @Inject
+    private LeaveRequestRepository leaveRequestRepository ;
 
     public void createLeaveRequest(LeaveRequest leaveRequest) {
         leaveRequestRepository.save(leaveRequest);

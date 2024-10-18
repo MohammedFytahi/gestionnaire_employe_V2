@@ -100,10 +100,9 @@
 
         <label for="statut">Status: <span style="color:red">*</span></label>
         <select id="statut" name="statut" required aria-label="Job offer status">
-            <option value="RECU">Recu</option>
+
             <option value="EN_COURS">En cours</option>
-            <option value="REJETE">Rejeté</option>
-            <option value="ACCEPTE">Accepté</option>
+          >
         </select>
 
         <button type="submit">Submit</button>

@@ -55,7 +55,6 @@ public class UpdateLeaveRequestStatusServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/adminLeaveRequests");
     }
 
-
     private void sendEmail(String to, String status) {
         String subject = "Statut de votre demande de congé";
         String body = "Votre demande de congé a été " + status.toLowerCase() + ".";

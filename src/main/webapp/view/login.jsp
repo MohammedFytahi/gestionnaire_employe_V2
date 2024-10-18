@@ -115,6 +115,6 @@
   <div class="error">${errorMessage}</div>
 </c:if>
 
-<p>Pas encore inscrit ? <a href="register.jsp">Inscrivez-vous ici</a>.</p>
+
 </body>
 </html>

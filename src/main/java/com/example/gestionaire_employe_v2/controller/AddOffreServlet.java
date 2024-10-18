@@ -50,7 +50,6 @@ public class AddOffreServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
-
         if (user.getRole() != Role.RH) {
             request.setAttribute("errorMessage", "Vous n'êtes pas autorisé à ajouter des offres.");
             request.getRequestDispatcher("view/unauthorized.jsp").forward(request, response);
@@ -58,15 +57,35 @@ public class AddOffreServlet extends HttpServlet {
         }
 
         try {
-
+            // Récupération des paramètres du formulaire
             String title = request.getParameter("title");
             String description = request.getParameter("description");
             String requirements = request.getParameter("requirements");
+            String validityPeriodeStr = request.getParameter("validityPeriode");
+            String statutStr = request.getParameter("statut");
+
+            // Vérification des champs obligatoires
+            if (title == null || title.isEmpty() ||
+                    description == null || description.isEmpty() ||
+                    requirements == null || requirements.isEmpty() ||
+                    validityPeriodeStr == null || validityPeriodeStr.isEmpty() ||
+                    statutStr == null || statutStr.isEmpty()) {
+                request.setAttribute("errorMessage", "Tous les champs obligatoires doivent être remplis.");
+                request.getRequestDispatcher("view/addOffre.jsp").forward(request, response);
+                return;
+            }
+
+            // Validation de la date de validité
+            LocalDate validityPeriode = LocalDate.parse(validityPeriodeStr);
             LocalDate datePosted = LocalDate.now();
-            LocalDate validityPeriode = LocalDate.parse(request.getParameter("validityPeriode"));
-            Statut statut = Statut.valueOf(request.getParameter("statut"));
+            if (validityPeriode.isBefore(datePosted)) {
+                request.setAttribute("errorMessage", "La date de validité ne peut pas être antérieure à aujourd'hui.");
+                request.getRequestDispatcher("view/addOffre.jsp").forward(request, response);
+                return;
+            }
 
-
+            // Création de l'offre
+            Statut statut = Statut.valueOf(statutStr);
             Offre offre = new Offre();
             offre.setTitle(title);
             offre.setDescription(description);
@@ -75,9 +94,8 @@ public class AddOffreServlet extends HttpServlet {
             offre.setValidityPeriode(validityPeriode);
             offre.setStatut(statut);
 
-
+            // Enregistrement de l'offre
             offreService.addOffre(offre);
-
 
             response.sendRedirect("success.jsp");
         } catch (Exception e) {
@@ -86,4 +104,5 @@ public class AddOffreServlet extends HttpServlet {
             request.getRequestDispatcher("view/addOffre.jsp").forward(request, response);
         }
     }
+
 }

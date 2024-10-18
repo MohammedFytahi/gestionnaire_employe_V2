@@ -1,3 +1,5 @@
+<%@ page import="com.example.gestionaire_employe_v2.model.Employe" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -68,7 +70,17 @@
 <h1>Calcul des Allocations Familiales</h1>
 <form action="${pageContext.request.contextPath}/calculateAllowance" method="post">
   <label for="employeId">ID de l'employé:</label>
-  <input type="number" id="employeId" name="employeId" required>
+  <select id="employeId" name="employeId" required>
+    <option value="">-- Sélectionner un employé --</option>
+    <%
+      List<Employe> employes = (List<Employe>) request.getAttribute("employes");
+      for (Employe employe : employes) {
+    %>
+    <option value="<%= employe.getId() %>"><%= employe.getUsername() %> </option>
+    <%
+      }
+    %>
+  </select>
   <button type="submit">Calculer</button>
 </form>
 </body>
