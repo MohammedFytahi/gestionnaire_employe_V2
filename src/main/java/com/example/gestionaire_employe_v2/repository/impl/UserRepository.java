@@ -3,9 +3,11 @@ package com.example.gestionaire_employe_v2.repository.impl;
 import com.example.gestionaire_employe_v2.model.User;
 import com.example.gestionaire_employe_v2.repository.interfaces.UserRepositoryInterface;
 import com.example.gestionaire_employe_v2.util.JPAUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class UserRepository implements UserRepositoryInterface {
 
     @Override
