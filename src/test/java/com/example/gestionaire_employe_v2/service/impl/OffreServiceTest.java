@@ -3,19 +3,22 @@ package com.example.gestionaire_employe_v2.service.impl;
 import com.example.gestionaire_employe_v2.enums.Statut;
 import com.example.gestionaire_employe_v2.model.Offre;
 import com.example.gestionaire_employe_v2.repository.impl.OffreRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class OffreServiceTest {
 
   @Mock
@@ -24,9 +27,9 @@ public class OffreServiceTest {
   @InjectMocks
   private OffreService offreService;
 
-  @BeforeEach
+  @Before
   public void setUp() {
-
+    MockitoAnnotations.initMocks(this);
   }
 
   @Test
@@ -47,8 +50,7 @@ public class OffreServiceTest {
 
   @Test
   public void testFindByIdWhenOffreIsValid() {
-
-    LocalDate validDate = LocalDate.now().plusDays(1); // Future date
+    LocalDate validDate = LocalDate.now().plusDays(1);
     Offre offre = new Offre();
     offre.setId(1);
     offre.setValidityPeriode(validDate);
@@ -56,18 +58,15 @@ public class OffreServiceTest {
 
     when(offreRepository.findById(1)).thenReturn(offre);
 
-
     Offre result = offreService.findById(1);
 
-
     assertEquals(Statut.EN_COURS, result.getStatut());
-    verify(offreRepository, never()).updateOffre(any(Offre.class)); // No update should happen
+    verify(offreRepository, never()).updateOffre(any(Offre.class));
   }
 
   @Test
   public void testFindByIdWhenOffreIsInactive() {
-
-    LocalDate pastDate = LocalDate.now().minusDays(1); // Past date
+    LocalDate pastDate = LocalDate.now().minusDays(1);
     Offre offre = new Offre();
     offre.setId(1);
     offre.setValidityPeriode(pastDate);
@@ -75,17 +74,14 @@ public class OffreServiceTest {
 
     when(offreRepository.findById(1)).thenReturn(offre);
 
-
     Offre result = offreService.findById(1);
 
-
     assertEquals(Statut.INACTIVE, result.getStatut());
-    verify(offreRepository).updateOffre(offre); // Update should be called
+    verify(offreRepository).updateOffre(offre);
   }
 
   @Test
-  public void testFindAllWithValidAndExpiredOffres(){
-
+  public void testFindAllWithValidAndExpiredOffres() {
     LocalDate validDate = LocalDate.now().plusDays(1);
     LocalDate expiredDate = LocalDate.now().minusDays(1);
 
@@ -98,5 +94,27 @@ public class OffreServiceTest {
     expiredOffre.setId(2);
     expiredOffre.setValidityPeriode(expiredDate);
     expiredOffre.setStatut(Statut.EN_COURS);
+  }
+
+  @Test
+  public void testFindAll() {
+    Offre offreActive = new Offre();
+    offreActive.setStatut(Statut.EN_COURS);
+    offreActive.setValidityPeriode(LocalDate.now().plusDays(5));
+
+    Offre offreExpirée = new Offre();
+    offreExpirée.setStatut(Statut.EN_COURS);
+    offreExpirée.setValidityPeriode(LocalDate.now().minusDays(1));
+
+    List<Offre> mockOffres = Arrays.asList(offreActive, offreExpirée);
+
+    when(offreRepository.findAll()).thenReturn(mockOffres);
+
+    List<Offre> result = offreService.findAll();
+
+    assertEquals(Statut.INACTIVE, offreExpirée.getStatut());
+    assertEquals(mockOffres, result);
+    verify(offreRepository).updateOffre(offreExpirée);
+    verify(offreRepository).findAll();
   }
 }

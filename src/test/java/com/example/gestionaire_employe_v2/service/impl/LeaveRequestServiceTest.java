@@ -2,39 +2,42 @@ package com.example.gestionaire_employe_v2.service.impl;
 
 import com.example.gestionaire_employe_v2.enums.Statut;
 import com.example.gestionaire_employe_v2.model.LeaveRequest;
+import com.example.gestionaire_employe_v2.repository.impl.EmployeRepository;
 import com.example.gestionaire_employe_v2.repository.impl.LeaveRequestRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class LeaveRequestServiceTest {
 
     @Mock
     private LeaveRequestRepository leaveRequestRepository;
 
+    @Mock
+    private EmployeRepository employeRepository;
+
     @InjectMocks
     private LeaveRequestService leaveRequestService;
 
-    @BeforeEach
+    @Before
     public void setUp() {
-
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void testCreateLeaveRequest() {
-
         LeaveRequest leaveRequest = new LeaveRequest();
         leaveRequest.setLeaveRequestId(1);
         leaveRequest.setStartDate(LocalDate.now());
@@ -44,17 +47,13 @@ public class LeaveRequestServiceTest {
         leaveRequest.setStatus(Statut.RECU);
         leaveRequest.setEmployeeId(152);
 
-
         leaveRequestService.createLeaveRequest(leaveRequest);
-
 
         verify(leaveRequestRepository).save(leaveRequest);
     }
 
-
     @Test
     public void testGetAllLeaveRequests() {
-
         LeaveRequest leaveRequest1 = new LeaveRequest();
         leaveRequest1.setLeaveRequestId(1);
         leaveRequest1.setStartDate(LocalDate.now());
@@ -75,15 +74,46 @@ public class LeaveRequestServiceTest {
 
         List<LeaveRequest> mockRequests = Arrays.asList(leaveRequest1, leaveRequest2);
 
-
         when(leaveRequestRepository.findAll()).thenReturn(mockRequests);
-
 
         List<LeaveRequest> result = leaveRequestService.getAllLeaveRequests();
 
-        assertEquals(2, result.size(), "La taille de la liste des demandes de congé doit être 2");
-        assertEquals(mockRequests, result, "Les demandes de congé récupérées doivent correspondre aux demandes simulées");
+        assertEquals(2, result.size());
+        assertEquals(mockRequests, result);
         verify(leaveRequestRepository).findAll();
     }
 
+    @Test
+    public void testApproveLeaveRequestIfSufficientBalance() {
+        int requestId = 1;
+        boolean sufficientBalance = true;
+
+        when(leaveRequestRepository.approveLeaveRequestIfSufficientBalance(requestId)).thenReturn(sufficientBalance);
+
+        boolean result = leaveRequestService.approveLeaveRequestIfSufficientBalance(requestId);
+
+        assertEquals(sufficientBalance, result);
+        verify(leaveRequestRepository).approveLeaveRequestIfSufficientBalance(requestId);
+    }
+
+    @Test
+    public void testGetLeaveRequestById() {
+        int requestId = 1;
+
+        LeaveRequest mockLeaveRequest = new LeaveRequest();
+        mockLeaveRequest.setLeaveRequestId(requestId);
+        mockLeaveRequest.setStartDate(LocalDate.now());
+        mockLeaveRequest.setEndDate(LocalDate.now().plusDays(5));
+        mockLeaveRequest.setLeaveReason("Vacances");
+        mockLeaveRequest.setSupportingDocs("document.pdf");
+        mockLeaveRequest.setStatus(Statut.RECU);
+        mockLeaveRequest.setEmployeeId(152);
+
+        when(leaveRequestRepository.findById(requestId)).thenReturn(mockLeaveRequest);
+
+        LeaveRequest result = leaveRequestService.getLeaveRequestById(requestId);
+
+        assertEquals(mockLeaveRequest, result);
+        verify(leaveRequestRepository).findById(requestId);
+    }
 }
