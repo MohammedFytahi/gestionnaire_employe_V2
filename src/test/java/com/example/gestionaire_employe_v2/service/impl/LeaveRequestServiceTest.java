@@ -116,4 +116,14 @@ public class LeaveRequestServiceTest {
         assertEquals(mockLeaveRequest, result);
         verify(leaveRequestRepository).findById(requestId);
     }
+
+    @Test
+    public void testUpdateLeaveRequestStatus() {
+        int requestId = 1;
+        Statut newStatus = Statut.ACCEPTE;
+
+        leaveRequestService.updateLeaveRequestStatus(requestId, newStatus);
+
+        verify(leaveRequestRepository).updateStatus(requestId, newStatus);
+    }
 }
