@@ -42,25 +42,25 @@ public class LeaveRequestRepository {
 
     }
 
-    public void updateStatus(int requestId, Statut status) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            LeaveRequest leaveRequest = entityManager.find(LeaveRequest.class, requestId);
-            if (leaveRequest != null) {
-                leaveRequest.setStatus(status);
-                transaction.commit();
-            }
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-    }
+                                                                                                                                                                                                                                            public void updateStatus(int requestId, Statut status) {
+                                                                                                                                                                                                                                                EntityManager entityManager = JPAUtil.getEntityManager();
+                                                                                                                                                                                                                                                EntityTransaction transaction = entityManager.getTransaction();
+                                                                                                                                                                                                                                                try {
+                                                                                                                                                                                                                                                    transaction.begin();
+                                                                                                                                                                                                                                                    LeaveRequest leaveRequest = entityManager.find(LeaveRequest.class, requestId);
+                                                                                                                                                                                                                                                    if (leaveRequest != null) {
+                                                                                                                                                                                                                                                        leaveRequest.setStatus(status);
+                                                                                                                                                                                                                                                        transaction.commit();
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                } catch (Exception e) {
+                                                                                                                                                                                                                                                    if (transaction.isActive()) {
+                                                                                                                                                                                                                                                        transaction.rollback();
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                    e.printStackTrace();
+                                                                                                                                                                                                                                                } finally {
+                                                                                                                                                                                                                                                    entityManager.close();
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                            }
 
     public LeaveRequest findById(int requestId) {
         EntityManager entityManager = JPAUtil.getEntityManager();

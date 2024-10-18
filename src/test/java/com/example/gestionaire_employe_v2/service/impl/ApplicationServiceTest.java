@@ -66,4 +66,16 @@ public class ApplicationServiceTest {
         assertEquals("Jane Smith", filteredApplications.get(1).getCandidateName());
         assertEquals("Emily Davis", filteredApplications.get(2).getCandidateName());
     }
+
+    @Test
+    public void testGetAllApplications() {
+        when(applicationRepository.findAllApplications()).thenReturn(applications);
+
+        List<Application> allApplications = applicationService.getAllApplications();
+
+        assertEquals(3, allApplications.size());
+        assertEquals("John Doe", allApplications.get(0).getCandidateName());
+        assertEquals("Jane Smith", allApplications.get(1).getCandidateName());
+        assertEquals("Emily Davis", allApplications.get(2).getCandidateName());
+    }
 }
